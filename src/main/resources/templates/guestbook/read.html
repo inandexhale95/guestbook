@@ -40,11 +40,11 @@
       </div>
     </form>
 
-    <a th:href="@{/guestbook/modify(gno = ${dto.gno}, page = ${pageRequestDTO.page})}">
+    <a th:href="@{/guestbook/modify(gno = ${dto.gno}, page = ${pageRequestDTO.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
       <button type="button" class="btn btn-primary">Modify</button>
     </a>
 
-    <a th:href="@{/guestbook/list(page = ${pageRequestDTO.page})}">
+    <a th:href="@{/guestbook/list(page = ${pageRequestDTO.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
       <button type="button" class="btn btn-info">List</button>
     </a>
 

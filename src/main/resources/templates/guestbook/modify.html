@@ -4,11 +4,12 @@
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
     <th:block th:fragment="content">
 
-
         <h1 class="mt-4">GuestBook Modify Page</h1>
 
         <form th:action="@{/guestbook/modify}" th:method="post">
             <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+            <input type="hidden" name="type" th:value="${pageRequestDTO.type}">
+            <input type="hidden" name="keyword" th:value="${pageRequestDTO.keyword}">
 
             <div class="form-group">
                 <label>Gno</label>
@@ -72,10 +73,14 @@
             });
 
             $(".listBtn").click(() => {
-                let pageInfo = $("input[name='page']");
+                let page = $("input[name='page']");
+                let type = $("input[name='type']");
+                let keyword = $("input[name='keyword']");
 
                 actionForm.empty();             // form 태그의 모든 내용을 지운다.
-                actionForm.append(pageInfo);    // 목록 페이지 이동에 필요한 내용을 다시 추가
+                actionForm.append(page);
+                actionForm.append(type);
+                actionForm.append(keyword);
 
                 actionForm
                     .attr("action", "/guestbook/list")
