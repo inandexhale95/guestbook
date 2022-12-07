@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+
+
+        <h1 class="mt-4">GuestBook Modify Page</h1>
+
+        <form th:action="@{/guestbook/modify}" th:method="post">
+            <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+
+            <div class="form-group">
+                <label>Gno</label>
+                <input th:value="${dto.gno}" type="text" class="form-control" name="gno" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Title</label>
+                <input th:value="${dto.title}" type="text" class="form-control" name="title">
+            </div>
+
+            <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control" rows="5" name="content">[[${dto.content}]]</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Writer</label>
+                <input th:value="${dto.writer}" type="text" class="form-control" name="writer" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>RegDate</label>
+                <input th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" type="text"
+                       class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>ModDate</label>
+                <input th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" type="text"
+                       class="form-control" readonly>
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-primary modifyBtn">Modify</button>
+
+        <button type="button" class="btn btn-info listBtn">List</button>
+
+        <button type="button" class="btn btn-warning removeBtn">Remove</button>
+
+        <script th:inline="javascript">
+            let actionForm = $("form");
+
+            $(".removeBtn").click(() => {
+               actionForm
+                   .attr("action", "/guestbook/remove")
+                   .attr("method", "post");
+               actionForm.submit();
+            });
+
+            $(".modifyBtn").click(() => {
+
+                if (!confirm("수정하시겠습니까?")) {
+                    return;
+                }
+
+                actionForm
+                    .attr("action", "/guestbook/modify")
+                    .attr("method", "post");
+                actionForm.submit();
+            });
+
+            $(".listBtn").click(() => {
+                let pageInfo = $("input[name='page']");
+
+                actionForm.empty();             // form 태그의 모든 내용을 지운다.
+                actionForm.append(pageInfo);    // 목록 페이지 이동에 필요한 내용을 다시 추가
+
+                actionForm
+                    .attr("action", "/guestbook/list")
+                    .attr("method", "get");
+
+                console.log(actionForm.html());
+                actionForm.submit();
+            });
+        </script>
+
+    </th:block>
+</th:block>

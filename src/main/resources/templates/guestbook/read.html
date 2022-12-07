@@ -5,7 +5,7 @@
   <th:block th:fragment="content">
 
 
-    <h1 class="mt-4">GuestBook Register Page</h1>
+    <h1 class="mt-4">GuestBook Read Page</h1>
 
     <form th:action="@{/guestbook/register}" th:method="post">
 
@@ -30,19 +30,24 @@
       </div>
 
       <div class="form-group">
-        <label >Writer</label>
+        <label >RegDate</label>
         <input th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" type="text" class="form-control" name="regDate" readonly>
       </div>
 
       <div class="form-group">
-        <label >Writer</label>
+        <label >ModDate</label>
         <input th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" type="text" class="form-control" name="modDate" readonly>
       </div>
     </form>
 
+    <a th:href="@{/guestbook/modify(gno = ${dto.gno}, page = ${pageRequestDTO.page})}">
+      <button type="button" class="btn btn-primary">Modify</button>
+    </a>
+
     <a th:href="@{/guestbook/list(page = ${pageRequestDTO.page})}">
       <button type="button" class="btn btn-info">List</button>
     </a>
+
 
   </th:block>
 </th:block>
